@@ -1,2 +1,7 @@
-node_modules/.vite
-node_modules/.vite/*
+.vscode
+.DS_Store
+#dist
+#dist-ssr
+*.local
+.idea
+.env
