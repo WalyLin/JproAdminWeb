@@ -9,22 +9,29 @@
 import { ref, reactive } from 'vue'
 import jproPlan from '@/api/jpro/jproPlan'
 import { Message } from '@arco-design/web-vue'
+import user from '@/api/system/user'
 import tool from '@/utils/tool'
 import * as common from '@/utils/common'
 
 const crudRef = ref()
 
+const userList = ref([])
+user.getList().then(res => {
+  res.data.map(item=>{item.nickname = item.nickname?item.nickname:item.username;return item})
+  userList.value = res.data
+})
+
 
 const numberOperation = (newValue, id, numberName) => {
-  jproPlan.numberOperation({ id, numberName, numberValue: newValue }).then( res => {
+  jproPlan.numberOperation({ id, numberName, numberValue: newValue }).then(res => {
     res.success && Message.success(res.message)
-  }).catch( e => { console.log(e) } )
+  }).catch(e => { console.log(e) })
 }
 
 const switchStatus = (statusValue, id, statusName) => {
-  jproPlan.changeStatus({ id, statusName, statusValue }).then( res => {
+  jproPlan.changeStatus({ id, statusName, statusValue }).then(res => {
     res.success && Message.success(res.message)
-  }).catch( e => { console.log(e) } )
+  }).catch(e => { console.log(e) })
 }
 
 
@@ -74,7 +81,19 @@ const options = reactive({
     show: true,
     url: 'jpro/plan/export',
     auth: ['jpro:plan:export']
-  }
+  },
+  formOption: {
+    width: 800,
+    layout: [
+      // { formType: 'grid', cols: [ { span: 24, formList: [ { dataIndex: 'avatar' }] }]  },
+      // { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'username' }] }, { span: 12, formList: [{ dataIndex: 'dept_ids' }] }]  },
+      // { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'password' }] }, { span: 12, formList: [{ dataIndex: 'nickname' }] }]  },
+      // { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'role_ids' }] }, { span: 12, formList: [{ dataIndex: 'phone' }] }]  },
+      // { formType: 'grid', cols: [ { span: 12, formList: [ { dataIndex: 'post_ids' }] }, { span: 12, formList: [{ dataIndex: 'email' }] }]  },
+      // { formType: 'grid', cols: [ { span: 24, formList: [ { dataIndex: 'status' }] }] },
+      // { formType: 'grid', cols: [ { span: 24, formList: [ { dataIndex: 'remark' }] }] },
+    ]
+  },
 })
 
 const columns = reactive([
@@ -93,22 +112,13 @@ const columns = reactive([
   {
     title: "用户id",
     dataIndex: "user_id",
-    formType: "input",
-    search: true,
-    commonRules: {
-      required: true,
-      message: "请输入用户id"
-    }
-  },
-  {
-    title: "事件类型",
-    dataIndex: "plan_type",
     formType: "select",
     search: true,
-    commonRules: {
-      required: true,
-      message: "请输入事件类型"
-    }
+    dict: { 
+      data: userList,
+      props: { label: 'nickname', value: 'id' } ,
+    },
+    commonRules: [{ required: true, message: '用户必选' }],
   },
   {
     title: "事件详情",
@@ -144,7 +154,7 @@ const columns = reactive([
   {
     title: "状态",
     dataIndex: "status",
-    formType: "radio",
+    formType: "radio",    
     search: true,
     commonRules: {
       required: true,
@@ -154,7 +164,7 @@ const columns = reactive([
       data: [
         {
           label: "未开始",
-          value: "1"
+          value: "1",
         },
         {
           label: "进行中",
@@ -170,7 +180,8 @@ const columns = reactive([
         }
       ],
       translation: true
-    }
+    },
+    addDefaultValue: 1,
   },
   {
     title: "",
@@ -200,4 +211,4 @@ const columns = reactive([
   }
 ])
 </script>
-<script> export default { name: 'jpro:plan' } </script>
+<script>export default { name: 'jpro:plan' } </script>

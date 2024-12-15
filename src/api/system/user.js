@@ -167,4 +167,17 @@ export default {
       data
     })
   },
+
+  
+  /**
+   * 用户列表
+   * @returns
+   */
+  getList(params = {}) {
+    return request({
+      url: 'system/user/getList',
+      method: 'get',
+      params
+    })
+  },
 }
