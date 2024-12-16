@@ -93,7 +93,7 @@
       window.open(bigMenu.path)
       return
     }
-    if (bigMenu.children.length > 0) {
+    if (bigMenu.children?.length > 0) {
       if (bigMenu.redirect && isInit && !keepAliveStore.menuLoader) {
         router.push(bigMenu.redirect)
       }

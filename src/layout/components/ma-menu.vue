@@ -43,6 +43,7 @@
   })
 
   watch(() => route, v => {
+    console.log('调试ma-menu',v,route)
     actives.value = [ v.name ]
     findTopMenuName()
   }, { deep: true })

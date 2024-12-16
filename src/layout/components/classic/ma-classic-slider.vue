@@ -33,7 +33,7 @@
   const MaMenuRef = ref(null)
   const userStore = useUserStore()
   const appStore = useAppStore()
-
+console.info('调试-ma-classic-slider',userStore)
   onMounted(() => {
     setTimeout(_ => {
       MaMenuRef.value.menus = userStore.routers

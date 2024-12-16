@@ -49,6 +49,7 @@
   const tagStore = useTagStore()
 
   const routerPush = (menu) => {
+    console.info('调试-菜单2',menu)
     if (menu.meta && menu.meta.type === 'L') {
       window.open(menu.path)
     } else if (menu.path && menu.component) {
