@@ -2,6 +2,11 @@
   <div class="ma-content-block lg:flex justify-between p-4">
     <!-- CRUD 组件 -->
     <ma-crud :options="options" :columns="columns" ref="crudRef">
+       <!-- 自定义字段名为 status 的插槽 -->
+       <template #search-user_nickname="{ searchForm, component }">
+            <!-- 显示一个输入框组件，并绑定输入框的v-model -->
+            <a-select v-model="searchForm[component.dataIndex]" placeholder="请输入昵称" :options="user_nicknameSelect" :field-names="user_nicknameSelectfieldNames"/>
+        </template>
     </ma-crud>
   </div>
 </template>
@@ -21,6 +26,8 @@ user.getList().then(res => {
   userList.value = res.data
 })
 
+const user_nicknameSelect = userList;
+const  user_nicknameSelectfieldNames={value:'nickname',label:'昵称'}
 
 const numberOperation = (newValue, id, numberName) => {
   jproPlan.numberOperation({ id, numberName, numberValue: newValue }).then(res => {
@@ -110,8 +117,8 @@ const columns = reactive([
     }
   },
   {
-    title: "用户id",
-    dataIndex: "user_id",
+    title: "用户",
+    dataIndex: "user_nickname",
     formType: "select",
     search: true,
     dict: { 
@@ -143,14 +150,14 @@ const columns = reactive([
     dataIndex: "time",
     formType: "date",
     search: true,
-    showTime: true
+    showTime: false
   },
-  {
-    title: "允许查看角色",
-    dataIndex: "role",
-    formType: "input",
-    search: true
-  },
+  // {
+  //   title: "允许查看角色",
+  //   dataIndex: "role",
+  //   formType: "input",
+  //   search: true
+  // },
   {
     title: "状态",
     dataIndex: "status",
@@ -183,32 +190,6 @@ const columns = reactive([
     },
     addDefaultValue: 1,
   },
-  {
-    title: "",
-    dataIndex: "created_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    showTime: true
-  },
-  {
-    title: "",
-    dataIndex: "updated_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  },
-  {
-    title: "",
-    dataIndex: "deleted_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  }
 ])
 </script>
 <script>export default { name: 'jpro:plan' } </script>
