@@ -90,16 +90,7 @@ const columns = reactive([
       message: "请输入"
     }
   },
-  {
-    title: "上级分类",
-    dataIndex: "pid",
-    formType: "input",
-    search: true,
-    commonRules: {
-      required: true,
-      message: "请输入上级分类"
-    }
-  },
+ 
   {
     title: "类型名称",
     dataIndex: "name",
@@ -122,15 +113,7 @@ const columns = reactive([
       message: "请输入备注"
     }
   },
-  {
-    title: "可以查看角色",
-    dataIndex: "role",
-    formType: "input",
-    commonRules: {
-      required: true,
-      message: "请输入可以查看角色"
-    }
-  },
+
   {
     title: "状态",
     dataIndex: "status",
@@ -152,34 +135,17 @@ const columns = reactive([
         }
       ],
       translation: true
-    }
+    },
+    addDefaultValue: "1",
   },
   {
-    title: "",
+    title: "创建时间",
     dataIndex: "created_at",
     formType: "date",
     addDisplay: false,
     editDisplay: false,
     showTime: true
   },
-  {
-    title: "",
-    dataIndex: "updated_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  },
-  {
-    title: "",
-    dataIndex: "deleted_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  }
 ])
 </script>
 <script> export default { name: 'jpro:planType' } </script>

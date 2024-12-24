@@ -2,12 +2,24 @@
   <div class="ma-content-block lg:flex justify-between p-4">
     <!-- CRUD 组件 -->
     <ma-crud :options="options" :columns="columns" ref="crudRef">
-       <!-- 自定义字段名为 status 的插槽 -->
-       <template #search-user_nickname="{ searchForm, component }">
-            <!-- 显示一个输入框组件，并绑定输入框的v-model -->
-            <a-select v-model="searchForm[component.dataIndex]" placeholder="请输入昵称" :options="user_nicknameSelect" :field-names="user_nicknameSelectfieldNames"/>
-        </template>
+
+      <template #search-time="{ searchForm, component }">
+        <!-- 显示一个输入框组件，并绑定输入框的v-model -->
+        <a-range-picker v-model="searchForm[component.dataIndex]" style="width: 360px; margin: 0 24px 24px 0;" show-time
+          :time-picker-props="{ defaultValue: ['00:00:00', '23:59:59'] }" format="YYYY-MM-DD HH:mm" />
+      </template>
+
+      <template #tableAfterButtons v-if="checkAuth('jpro:plan:delete')" v-auth="['jpro:planType:index']">
+        <a-button @click="open" type="primary">任务类型管理</a-button>
+        <a-modal v-model:visible="visible" :footer="false" width="70%">
+          <template #title>任务类型管理</template>
+          <plan-type-list ref="planTypeListRef" :visible="visible" @close="visible = false"></plan-type-list>
+        </a-modal>
+      </template>
+
+
     </ma-crud>
+
   </div>
 </template>
 <script setup>
@@ -15,19 +27,20 @@ import { ref, reactive } from 'vue'
 import jproPlan from '@/api/jpro/jproPlan'
 import { Message } from '@arco-design/web-vue'
 import user from '@/api/system/user'
+import planType from '@/api/jpro/jproPlanType'
 import tool from '@/utils/tool'
 import * as common from '@/utils/common'
-
+import planTypeList from '../planType/index.vue'
+import checkAuth from '@/directives/auth/auth'
+import dayjs from 'dayjs'
 const crudRef = ref()
 
-const userList = ref([])
-user.getList().then(res => {
-  res.data.map(item=>{item.nickname = item.nickname?item.nickname:item.username;return item})
-  userList.value = res.data
-})
 
-const user_nicknameSelect = userList;
-const  user_nicknameSelectfieldNames={value:'nickname',label:'昵称'}
+
+const visible = ref(false)
+const open = () => {
+  visible.value = true
+}
 
 const numberOperation = (newValue, id, numberName) => {
   jproPlan.numberOperation({ id, numberName, numberValue: newValue }).then(res => {
@@ -42,6 +55,17 @@ const switchStatus = (statusValue, id, statusName) => {
 }
 
 
+const doDict = (params) => {
+  params.user_id = params.username_and_nickname
+  params.plan_type = params.plan_type_name
+  if (params.status == 0) {
+    delete params.status
+  }
+  delete params.username_and_nickname
+  delete params.plan_type_name
+  return params
+}
+
 const options = reactive({
   id: 'jpro_plan',
   rowSelection: {
@@ -50,9 +74,21 @@ const options = reactive({
   pk: 'id',
   operationColumn: true,
   operationColumnWidth: 160,
+  operationColumnFixed: false,
   formOption: {
     viewType: 'modal',
     width: 600
+  },
+  beforeRequest: (params) => {
+    doDict(params)
+  },
+  beforeAdd: (data) => {
+    return doDict(data)
+  },
+  beforeEdit: (data) => {
+    console.info(data)
+    return data
+    // return doDict(data)
   },
   api: jproPlan.getList,
   recycleApi: jproPlan.getRecycleList,
@@ -118,17 +154,28 @@ const columns = reactive([
   },
   {
     title: "用户",
-    dataIndex: "user_nickname",
+    dataIndex: "username_and_nickname",
     formType: "select",
     search: true,
-    dict: { 
-      data: userList,
-      props: { label: 'nickname', value: 'id' } ,
+    dict: {
+      url: 'system/user/getList',
+      props: { label: 'username_and_nickname', value: 'id' },
     },
     commonRules: [{ required: true, message: '用户必选' }],
   },
   {
-    title: "事件详情",
+    title: "任务类型",
+    dataIndex: "plan_type_name",
+    formType: "select",
+    search: true,
+    dict: {
+      remote: 'jpro/planType/remote',
+      props: { label: "name", value: "id" }
+    },
+    translation: true
+  },
+  {
+    title: "详情",
     dataIndex: "detail",
     formType: "editor",
     hide: true
@@ -137,57 +184,34 @@ const columns = reactive([
     title: "备注",
     dataIndex: "remark",
     formType: "input",
-    addDisplay: false,
-    editDisplay: false,
+    addDisplay: true,
+    editDisplay: true,
     hide: true,
-    commonRules: {
-      required: true,
-      message: "请输入备注"
-    }
   },
   {
     title: "计划时间",
     dataIndex: "time",
     formType: "date",
+    format: "YYYY-MM-DD HH:mm",
+    addDefaultValue: dayjs().format('YYYY-MM-DD 00:00'),
     search: true,
-    showTime: false
+    showTime: true
   },
-  // {
-  //   title: "允许查看角色",
-  //   dataIndex: "role",
-  //   formType: "input",
-  //   search: true
-  // },
   {
     title: "状态",
     dataIndex: "status",
-    formType: "radio",    
+    formType: "radio",
     search: true,
     commonRules: {
       required: true,
       message: "请输入状态"
     },
     dict: {
-      data: [
-        {
-          label: "未开始",
-          value: "1",
-        },
-        {
-          label: "进行中",
-          value: "2"
-        },
-        {
-          label: "执行完毕",
-          value: "3"
-        },
-        {
-          label: "取消",
-          value: "4"
-        }
-      ],
-      translation: true
+      name: "plan_status",
+      translation: true,
+      tagColors:{  2: 'green' },
     },
+
     addDefaultValue: 1,
   },
 ])
