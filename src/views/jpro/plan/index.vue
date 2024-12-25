@@ -55,16 +55,6 @@ const switchStatus = (statusValue, id, statusName) => {
 }
 
 
-const doDict = (params) => {
-  params.user_id = params.username_and_nickname
-  params.plan_type = params.plan_type_name
-  if (params.status == 0) {
-    delete params.status
-  }
-  delete params.username_and_nickname
-  delete params.plan_type_name
-  return params
-}
 
 const options = reactive({
   id: 'jpro_plan',
@@ -80,15 +70,17 @@ const options = reactive({
     width: 600
   },
   beforeRequest: (params) => {
-    doDict(params)
+    params.user_id = params.username_and_nickname
+    params.plan_type = params.plan_type_name
   },
   beforeAdd: (data) => {
-    return doDict(data)
+    data.user_id = data.username_and_nickname
+    data.plan_type = data.plan_type_name
+    return data
   },
   beforeEdit: (data) => {
-    console.info(data)
+    data.plan_type = data.plan_type_name
     return data
-    // return doDict(data)
   },
   api: jproPlan.getList,
   recycleApi: jproPlan.getRecycleList,
@@ -209,10 +201,18 @@ const columns = reactive([
     dict: {
       name: "plan_status",
       translation: true,
-      tagColors:{  2: 'green' },
+      tagColors: { 2: 'green' },
     },
 
     addDefaultValue: 1,
+  },
+  {
+    title: "创建时间",
+    dataIndex: "created_at",
+    formType: "input",    
+    search: false,
+    // addDisplay: true,
+    // editDisplay: true,
   },
 ])
 </script>
