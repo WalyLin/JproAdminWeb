@@ -1,6 +1,29 @@
 import { request } from '@/utils/request.js'
 
 export default {
+
+  /**
+   * 获取医生列表
+   * @returns
+   */
+  getDoctorList(params = {}) {
+    return request({
+      url: 'jpro/common/getDoctorList',
+      method: 'get',
+      params
+    })
+  },
+  /**
+   * 获取医院列表
+   * @returns
+   */
+  getHospitalList(params = {}) {
+    return request({
+      url: 'jpro/common/getHospitalList',
+      method: 'get',
+      params
+    })
+  },
   /**
    * 获取用户列表
    * @returns
