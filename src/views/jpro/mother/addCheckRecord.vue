@@ -121,7 +121,16 @@ const columns = reactive([
         formType: "date",
         showTime: false,
     },
-
+    {
+        title: "状态",
+        dataIndex: 'status',
+        formType: "radio",
+        dict: {
+            name: 'check_record_status',
+            translation: true,            
+        },
+        addDefaultValue: 1,
+    },
     {
         title: "备注",
         dataIndex: "remark",
