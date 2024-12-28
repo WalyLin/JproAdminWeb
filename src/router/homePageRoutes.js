@@ -9,7 +9,8 @@ const homePageRoutes = [
       affix: true
     },
     component: () => import('@/views/dashboard/index.vue'),
-  }, {
+  }, 
+  {
     name: 'userCenter',
     path: '/usercenter',
     meta: {
@@ -18,16 +19,18 @@ const homePageRoutes = [
       type: 'M',
     },
     component: () => import('@/views/userCenter/index.vue'),
-  }, {
-    name: 'message',
-    path: '/message',
-    meta: {
-      title: '消息中心',
-      icon: 'icon-message',
-      type: 'M',
-    },
-    component: () => import('@/views/userCenter/message.vue'),
-  }, {
+  },
+  //  {
+  //   name: 'message',
+  //   path: '/message',
+  //   meta: {
+  //     title: '消息中心',
+  //     icon: 'icon-message',
+  //     type: 'M',
+  //   },
+  //   component: () => import('@/views/userCenter/message.vue'),
+  // },
+   {
     name: 'store',
     path: '/store',
     component: () => import('@/views/appStore/index.vue'),

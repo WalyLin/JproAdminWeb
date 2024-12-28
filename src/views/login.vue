@@ -15,11 +15,11 @@ import { useTagStore } from '@/store'
 import { useRouter, useRoute } from 'vue-router'
 import { request } from '@/utils/request'
 
-request({
-  url: 'system/getBingBackgroundImage', timeout: 10000, method: 'get'
-}).then( res => {
-  document.getElementById('background').style.backgroundImage = `url(${res.data.url})`
-})
+// request({
+//   url: 'system/getBingBackgroundImage', timeout: 10000, method: 'get'
+// }).then( res => {
+//   document.getElementById('background').style.backgroundImage = `url(${res.data?.url})`
+// })
 
 const router = useRouter()
 const route  = useRoute()
@@ -62,12 +62,13 @@ const handleSubmit = async ({ values, errors }) => {
   <div class="bg-backdrop-layout"></div>
   <div class="login-container">
     <div class="login-width md:w-10/12 w-11/12 mx-auto flex justify-between h-full items-center">
-      <div class="w-6/12 mx-auto left-panel rounded-l pl-5 pr-5 hidden md:block">
-        <div class="logo"><img :src="`${$url}logo.svg`" width="45"><span>{{ $title }}</span></div>
-        <div class="slogan flex justify-end"><span>---- {{ $t('sys.login.slogan') }}</span></div>
-      </div>
+      <!-- <div class="w-6/12 mx-auto left-panel rounded-l pl-5 pr-5 hidden md:block"> -->
+        <!-- <div class="logo"><img :src="`${$url}logo.svg`" width="45"><span>{{ $title }}</span></div> -->
+        <!-- <div class="slogan flex justify-end"><span>---- {{ $t('sys.login.slogan') }}</span></div> -->
+      <!-- </div> -->
 
       <div class="md:w-6/12 w-11/12 md:rounded-r mx-auto pl-5 pr-5 pb-10">
+        <div class='mylogo'></div>
         <h2 class="mt-10 text-3xl pb-0 mb-10">{{ $t('sys.login.title') }}</h2>
         <a-form :model="form" @submit="handleSubmit">
           <a-form-item
@@ -130,13 +131,7 @@ const handleSubmit = async ({ values, errors }) => {
             </a-button>
           </a-form-item>
 
-          <a-divider orientation="center">{{ $t('sys.login.otherLoginType') }}</a-divider>
-          <div class="flex w-3/4 pt-2 mx-auto items-stretch justify-around">
-            <a-avatar class="other-login wechat"><icon-wechat /></a-avatar>
-            <a-avatar class="other-login alipay"><icon-alipay-circle /></a-avatar>
-            <a-avatar class="other-login qq"><icon-qq /></a-avatar>
-            <a-avatar class="other-login weibo"><icon-weibo /></a-avatar>
-          </div>
+          
         </a-form>
       </div>
     </div>
@@ -177,6 +172,7 @@ const handleSubmit = async ({ values, errors }) => {
   .left-panel {
     height: 491px;
     background-image: url(@/assets/login_picture.svg);
+    // background-image: url(@/assets/login_picture.svg);
     background-repeat: no-repeat;
     background-position: center 60px;
     background-size:contain;
@@ -191,6 +187,17 @@ const handleSubmit = async ({ values, errors }) => {
   }
   .slogan {
     font-size: 16px; line-height: 50px;
+  }
+
+  .mylogo {
+    width: 100%;
+    height:200px;
+    background: #fff;
+    margin: 0 auto;    
+    background-image: url(@/assets/mylogo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 
   :deep(.arco-input-append) {
@@ -211,5 +218,6 @@ const handleSubmit = async ({ values, errors }) => {
   .weibo:hover {
     background: #f3ce2b;
   }
+
 }
 </style>

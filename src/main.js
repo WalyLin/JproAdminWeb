@@ -53,8 +53,8 @@ window.Request = request
 
 app.mount('#app')
 
-tool.capsule('MineAdmin', `v${packageJson.version} release`)
-tool.capsule('jpro', `又是美好的一天开始了`)
+// tool.capsule('MineAdmin', `v${packageJson.version} release`)
+tool.capsule('', `又是美好的一天开始了`)
 // console.log('MineAdmin 官网  https://www.mineadmin.com')
 // console.log('MineAdmin 文档  https://doc.mineadmin.com')
 // console.log('MineAdmin Github https://github.com/kanyxmo/MineAdmin')

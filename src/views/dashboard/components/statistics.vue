@@ -10,12 +10,12 @@
 <template>
 
   <st-welcome />
-  <st-count />
-  <st-login-chart />
+  <!-- <st-count /> -->
+  <!-- <st-login-chart /> -->
 
   <div class="block lg:flex">
     <st-announced />
-    <st-mineadmin />
+    <!-- <st-mineadmin /> -->
   </div>
 </template>
 

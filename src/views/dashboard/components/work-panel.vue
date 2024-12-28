@@ -9,7 +9,11 @@
 -->
 
 <template>
-  <div>
-    员工工作台页面，需自行开发
+  <div class="block lg:flex">
+    <st-announced />
   </div>
 </template>
+<script setup>
+import StAnnounced from './components/st-announced.vue'
+
+</script>

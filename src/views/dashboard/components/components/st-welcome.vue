@@ -24,10 +24,10 @@
             {{ userStore.user.nickname || userStore.user.username }}，欢迎回来！
           </div>
           <div class="leading-5 mt-2">
-            <a-tag color="blue" bordered>免费开源、可商用</a-tag>
-            欢迎使用MineAdmin后台权限管理系统，系统开源、免费使用。喜欢的请点个 ⭐Star。
+            <!-- <a-tag color="blue" bordered>免费开源、可商用</a-tag>
+            欢迎使用MineAdmin后台权限管理系统，系统开源、免费使用。喜欢的请点个 ⭐Star。 -->
             <a-space size="large">
-              <a-link @click="donate"><icon-thumb-up /> 给作者买杯奶茶</a-link>
+              笑是对抗生气或沮丧最有力的的东西。
             </a-space>
           </div>
         </div>
