@@ -1,6 +1,6 @@
 export default {
   storage: {
-    LOCAL: '',
+    LOCAL: import.meta.env.VITE_APP_UPLOAD_SHOW_URL ||'',
     OSS: '',
     QINIU: '',
     COS: '',

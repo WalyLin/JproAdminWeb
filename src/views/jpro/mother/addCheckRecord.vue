@@ -46,7 +46,9 @@ watch(() => props.mother, (val) => {
     form.value.mother_id = val.id
     form.value.hospital_id = val.hospital_id
     form.value.doctor_id = val.doctor_id
+    form.value.menstrual = val.last_menstrual_time
     form.value.check_time = dayjs().format('YYYY-MM-DD')
+    form.value.status = '1'
 
 }, { immediate: true })
 
@@ -71,6 +73,14 @@ const columns = reactive([
             message: "请选择孕妈"
         },
         multiple: false
+    },
+    {
+        title: "月经开始时间",
+        dataIndex: "menstrual",
+        formType: "date",
+        format: 'YYYY-MM-DD HH-mm',
+        defaultValue: props.mother.last_menstrual_time,
+        showTime: true,
     },
     {
         title: "医院",
@@ -111,6 +121,7 @@ const columns = reactive([
         formType: "date",
         showTime: false,
     },
+
     {
         title: "备注",
         dataIndex: "remark",

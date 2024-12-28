@@ -17,7 +17,8 @@
       </template>
     </ma-crud>
 
-    <add-check-record v-model:mother="currentRecord" ref="addCheckRecordRef" :parentCrudRef="crudRef"></add-check-record>
+    <add-check-record v-model:mother="currentRecord" ref="addCheckRecordRef"
+      :parentCrudRef="crudRef"></add-check-record>
 
   </div>
 </template>
@@ -59,26 +60,29 @@ const options = reactive({
     showCheckedAll: true
   },
   pk: 'id',
+  align: 'center',
   operationColumn: true,
   operationColumnWidth: 200,
   // operationColumnFixed: 'false',
   showTools: false,
   formOption: {
     viewType: 'modal',
-    width: 800,
+    width: 1000,
     layout: [
-      { formType: 'grid', cols: [{ span: 24, formList: [{ dataIndex: 'name' }] },] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'surname' }] }, { span: 12, formList: [{ dataIndex: 'name' }] }] },
       { formType: 'grid', cols: [{ span: 8, formList: [{ dataIndex: 'age' }] }, { span: 8, formList: [{ dataIndex: 'height' }] }, { span: 8, formList: [{ dataIndex: 'weight' }] },] },
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'body_status' }] }, { span: 12, formList: [{ dataIndex: 'gravida' }] }] },
+      { formType: 'grid', cols: [{ span: 8, formList: [{ dataIndex: 'gravida' }] }, { span: 8, formList: [{ dataIndex: 'children_amount' }] }, { span: 8, formList: [{ dataIndex: 'body_status' }] },] },
 
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'bleed_amount' }] }, { span: 12, formList: [{ dataIndex: 'children_amount' }] }] },
+
+
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'bleed_amount' }] }, { span: 12, formList: [{ dataIndex: 'hep_b' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'last_menstrual_time' }] }, { span: 12, formList: [{ dataIndex: 'arrive_time' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'hospital_id' }] }, { span: 12, formList: [{ dataIndex: 'doctor_id' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'operation' }] }, { span: 12, formList: [{ dataIndex: 'food_allergy' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'drug_allergy' }] }, { span: 12, formList: [{ dataIndex: 'complication' }] }] },
 
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'menstrual_freq' }] }, { span: 12, formList: [{ dataIndex: 'tag' }] }] },
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'tag_remark' }] }, { span: 12, formList: [{ dataIndex: 'remark' }] }] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'remark' }] }, { span: 12, formList: [{ dataIndex: 'passport' }] }] },
       { formType: 'grid', cols: [{ span: 24, formList: [{ dataIndex: 'extra' }] }] },
     ]
   },
@@ -133,13 +137,23 @@ const columns = reactive([
     }
   },
   {
-    title: "姓名",
+    title: "姓",
+    dataIndex: "surname",
+    formType: "input",
+    search: true,
+    commonRules: {
+      required: true,
+      message: "请输入姓"
+    }
+  },
+  {
+    title: "名",
     dataIndex: "name",
     formType: "input",
     search: true,
     commonRules: {
       required: true,
-      message: "请输入姓名"
+      message: "请输入名"
     }
   },
   {
@@ -206,6 +220,21 @@ const columns = reactive([
     editDisplay: false,
   },
   {
+    title: "乙肝疫苗",
+    dataIndex: "hep_b",
+    formType: "radio",
+    dict: {
+      name: "data_hep_b",
+      props: {
+        label: "title",
+        value: "key"
+      },
+      translation: true
+    },
+    align: 'center',
+    addDefaultValue: "1"
+  },
+  {
     title: "怀孕次数",
     dataIndex: "gravida",
     formType: "input-number",
@@ -220,29 +249,41 @@ const columns = reactive([
     max: 30
   },
   {
+    title: "护照",
+    dataIndex: "passport",
+    formType: "upload",
+    type: 'image',
+    returnType:'url',
+    hide: false,
+    addDefaultValue: ''
+  },
+  {
     title: "手术情况",
     dataIndex: "operation",
     formType: "textarea",
     hide: true,
-
+    addDefaultValue: '无',
   },
   {
     title: "食物过敏",
     dataIndex: "food_allergy",
     hide: true,
-    formType: "textarea"
+    formType: "textarea",
+    addDefaultValue: '无',
   },
   {
     title: "药物过敏",
     dataIndex: "drug_allergy",
     hide: true,
-    formType: "textarea"
+    formType: "textarea",
+    addDefaultValue: '无',
   },
   {
     title: "并发症",
     dataIndex: "complication",
     hide: true,
-    formType: "textarea"
+    formType: "textarea",
+    addDefaultValue: '无',
   },
   {
     title: "身高",
@@ -258,8 +299,10 @@ const columns = reactive([
     title: "上次月经时间",
     dataIndex: "last_menstrual_time",
     formType: "date",
+    format: 'YYYY-MM-DD HH:mm',
+    addDefaultValue: dayjs().format('YYYY-MM-DD HH:00'),
     width: 200,
-    showTime: false
+    showTime: true
   },
   {
     title: "到格鲁吉亚时间",
@@ -271,8 +314,13 @@ const columns = reactive([
   {
     title: "流血量",
     dataIndex: "bleed_amount",
-    formType: "input",
+    formType: "radio",
     hide: true,
+    dict: {
+      name: 'bleed_amount',
+      translation: true
+    },
+    addDefaultValue: '1'
   },
   {
     title: "小孩数量",
@@ -282,22 +330,23 @@ const columns = reactive([
     max: 20
   },
   {
-    title: "多少天一次月经",
+    title: "月经频次(天)",
     dataIndex: "menstrual_freq",
     formType: "input-number",
     hide: true,
+    addDefaultValue: 30,
   },
   {
     title: "标签",
     dataIndex: "tag",
     formType: "input"
   },
-  {
-    title: "标签备注",
-    dataIndex: "tag_remark",
-    formType: "input",
-    hide: true,
-  },
+  // {
+  //   title: "标签备注",
+  //   dataIndex: "tag_remark",
+  //   formType: "input",
+  //   hide: true,
+  // },
   {
     title: "备注",
     dataIndex: "remark",
@@ -309,15 +358,6 @@ const columns = reactive([
     dataIndex: "extra",
     formType: "editor",
     hide: true
-  },
-  {
-    title: "",
-    dataIndex: "created_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
   },
 ])
 </script>

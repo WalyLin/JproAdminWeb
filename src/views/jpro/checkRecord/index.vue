@@ -117,7 +117,7 @@ const columns = reactive([
     dataIndex: "hospital_id",
     formType: "select",
     dict: {
-      url: 'jpro/common/hospitals',      
+      url: 'jpro/common/hospitals',
       props: {
         label: 'name',
         value: 'id'
@@ -132,7 +132,7 @@ const columns = reactive([
     dataIndex: "doctor_id",
     formType: "select",
     dict: {
-      url: 'jpro/common/doctors',      
+      url: 'jpro/common/doctors',
       props: {
         label: 'name',
         value: 'id'
@@ -141,6 +141,14 @@ const columns = reactive([
     },
     search: true,
     multiple: false
+  },
+  {
+    title: "月经开始时间",
+    dataIndex: "menstrual",
+    formType: "date",
+    format: 'YYYY-MM-DD HH:mm',
+    showTime: true,
+    range: false
   },
   {
     title: "检查时间",
@@ -156,6 +164,17 @@ const columns = reactive([
     },
     showTime: false,
     range: false
+  },
+  {
+    title: "状态",
+    dataIndex: 'status',
+    formType: "radio",
+    dict: {
+      name: 'check_record_status',
+      translation: true,
+      tagColors:{1:'gray',2:'red'},
+    },
+    addDefaultValue: 1,
   },
   {
     title: "备注",
