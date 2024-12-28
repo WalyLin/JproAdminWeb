@@ -62,8 +62,8 @@ const options = reactive({
   pk: 'id',
   align: 'center',
   operationColumn: true,
-  operationColumnWidth: 200,
-  // operationColumnFixed: 'false',
+  operationColumnWidth: 190,
+  operationColumnFixed: 'false',
   showTools: false,
   formOption: {
     viewType: 'modal',
@@ -232,7 +232,8 @@ const columns = reactive([
       translation: true
     },
     align: 'center',
-    addDefaultValue: "1"
+    addDefaultValue: "1",
+    hide:true,
   },
   {
     title: "怀孕次数",
@@ -288,12 +289,14 @@ const columns = reactive([
   {
     title: "身高",
     dataIndex: "height",
-    formType: "input"
+    formType: "input",
+    hide:true,
   },
   {
     title: "体重",
     dataIndex: "weight",
-    formType: "input"
+    formType: "input",
+    hide:true,
   },
   {
     title: "上次月经时间",
@@ -327,7 +330,8 @@ const columns = reactive([
     dataIndex: "children_amount",
     formType: "input-number",
     search: true,
-    max: 20
+    max: 20,
+    hide:true,
   },
   {
     title: "月经频次(天)",
@@ -339,7 +343,8 @@ const columns = reactive([
   {
     title: "标签",
     dataIndex: "tag",
-    formType: "input"
+    formType: "input",
+    hide:true,
   },
   // {
   //   title: "标签备注",

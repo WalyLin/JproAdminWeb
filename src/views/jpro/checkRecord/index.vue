@@ -36,7 +36,8 @@ const options = reactive({
   },
   pk: 'id',
   operationColumn: true,
-  operationColumnWidth: 160,
+  operationColumnWidth: 140,
+  operationColumnFixed: 'false',
   showTools: false,
   formOption: {
     viewType: 'modal',

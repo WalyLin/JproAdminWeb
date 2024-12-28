@@ -77,9 +77,9 @@ const props = defineProps({
   toolbar: {
     type: [String, Array],
     default:
-        "code undo redo restoredraft | paste pastetext | forecolor backcolor bold italic underline strikethrough link codesample | fullscreen preview | alignleft aligncenter alignright alignjustify outdent indent formatpainter | \
+        "code undo redo restoredraft resource | paste pastetext | forecolor backcolor bold italic underline strikethrough link codesample | fullscreen preview | alignleft aligncenter alignright alignjustify outdent indent formatpainter | \
       styles codeformat fontfamily fontsize | bullist numlist | blockquote subscript superscript removeformat | table tablecellborderstyle media \
-      charmap pagebreak insertdatetime | resource"
+      charmap pagebreak insertdatetime "
   }
 })
 

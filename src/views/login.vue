@@ -68,7 +68,7 @@ const handleSubmit = async ({ values, errors }) => {
       <!-- </div> -->
 
       <div class="md:w-6/12 w-11/12 md:rounded-r mx-auto pl-5 pr-5 pb-10">
-        <div class='mylogo'></div>
+        <div class='cuslogo'></div>
         <h2 class="mt-10 text-3xl pb-0 mb-10">{{ $t('sys.login.title') }}</h2>
         <a-form :model="form" @submit="handleSubmit">
           <a-form-item
@@ -189,12 +189,12 @@ const handleSubmit = async ({ values, errors }) => {
     font-size: 16px; line-height: 50px;
   }
 
-  .mylogo {
+  .cuslogo {
     width: 100%;
     height:200px;
     background: #fff;
     margin: 0 auto;    
-    background-image: url(@/assets/mylogo.png);
+    background-image: url(logo.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
