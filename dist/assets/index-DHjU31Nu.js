@@ -1,1 +1,0 @@
-import{Z as r,c,e as s,h as e,o}from"./index-B1fRPOFQ.js";import a from"./auth-BaMhtKFH.js";import n from"./docMain-DvG4HC0Y.js";import"./doc-BACgKCBD.js";import"./package-D_Arx9TB.js";const m={class:"h-full"},k={__name:"index",setup(i){const t=r();return(p,_)=>(o(),c("div",m,[s(t).auth?(o(),e(n,{key:0})):(o(),e(a,{key:1}))]))}};export{k as default};

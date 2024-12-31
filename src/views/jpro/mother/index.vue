@@ -8,6 +8,10 @@
       </template>
 
 
+      <template #passport="{record}">
+        <image-see :url="record.passport"></image-see>
+      </template>
+
       <template #last_check_record="{ record }">
         <!-- 对标题加上 tag -->
         <a-tag v-if="record.last_check_record"
@@ -15,6 +19,8 @@
             record.last_check_record?.check_time
           }}</a-tag>
       </template>
+
+
     </ma-crud>
 
     <add-check-record v-model:mother="currentRecord" ref="addCheckRecordRef"
@@ -25,7 +31,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { Message } from '@arco-design/web-vue'
-
+import imageSee from '@/components/customer/imageSee.vue'
 import jproMother from '@/api/jpro/jproMother'
 import addCheckRecord from './addCheckRecord.vue'
 import checkAuth from '@/directives/auth/auth'
@@ -69,13 +75,15 @@ const options = reactive({
     viewType: 'modal',
     width: 1000,
     layout: [
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'surname' }] }, { span: 12, formList: [{ dataIndex: 'name' }] }] },
-      { formType: 'grid', cols: [{ span: 8, formList: [{ dataIndex: 'age' }] }, { span: 8, formList: [{ dataIndex: 'height' }] }, { span: 8, formList: [{ dataIndex: 'weight' }] },] },
-      { formType: 'grid', cols: [{ span: 8, formList: [{ dataIndex: 'gravida' }] }, { span: 8, formList: [{ dataIndex: 'children_amount' }] }, { span: 8, formList: [{ dataIndex: 'body_status' }] },] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'name' }] }, { span: 12, formList: [{ dataIndex: 'surname' }] }] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'height' }] }, { span: 12, formList: [{ dataIndex: 'weight' }] },] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'children_amount' }] }, { span: 12, formList: [{ dataIndex: 'body_status' }] },] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'age' }] }, { span: 12, formList: [{ dataIndex: 'gravida' }] },] },
 
 
-
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'bleed_amount' }] }, { span: 12, formList: [{ dataIndex: 'hep_b' }] }] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'hep_b' }] }, { span: 12, formList: [{ dataIndex: 'hep_b_date' }] }] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'bleed_amount' }] },] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'building' }] }, { span: 12, formList: [{ dataIndex: 'room' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'last_menstrual_time' }] }, { span: 12, formList: [{ dataIndex: 'arrive_time' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'hospital_id' }] }, { span: 12, formList: [{ dataIndex: 'doctor_id' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'operation' }] }, { span: 12, formList: [{ dataIndex: 'food_allergy' }] }] },
@@ -142,7 +150,7 @@ const columns = reactive([
     formType: "input",
     search: true,
     commonRules: {
-      required: true,
+      required: false,
       message: "请输入姓"
     }
   },
@@ -232,8 +240,8 @@ const columns = reactive([
       translation: true
     },
     align: 'center',
-    addDefaultValue: "1",
-    hide:true,
+    addDefaultValue: "2",
+    hide: true,
   },
   {
     title: "怀孕次数",
@@ -254,49 +262,65 @@ const columns = reactive([
     dataIndex: "passport",
     formType: "upload",
     type: 'image',
-    returnType:'url',
-    hide: false,
-    addDefaultValue: ''
+    returnType: 'url',        
+  },
+  {
+    title: "楼栋",
+    dataIndex: "building",
+    formType: "input",
+    hide: true,
+  },
+  {
+    title: "房间",
+    dataIndex: "room",
+    formType: "input",
+    hide: true,
+  },
+  {
+    title: "疫苗时间",
+    dataIndex: "hep_b_date",
+    formType: "input",
+    hide: true,
   },
   {
     title: "手术情况",
     dataIndex: "operation",
     formType: "textarea",
     hide: true,
-    addDefaultValue: '无',
+
   },
   {
     title: "食物过敏",
     dataIndex: "food_allergy",
     hide: true,
     formType: "textarea",
-    addDefaultValue: '无',
+
   },
   {
     title: "药物过敏",
     dataIndex: "drug_allergy",
     hide: true,
     formType: "textarea",
-    addDefaultValue: '无',
+
   },
   {
     title: "并发症",
     dataIndex: "complication",
     hide: true,
     formType: "textarea",
-    addDefaultValue: '无',
+
   },
   {
     title: "身高",
     dataIndex: "height",
     formType: "input",
-    hide:true,
+    hide: true,
   },
   {
     title: "体重",
     dataIndex: "weight",
     formType: "input",
-    hide:true,
+    hide: true,
   },
   {
     title: "上次月经时间",
@@ -331,7 +355,7 @@ const columns = reactive([
     formType: "input-number",
     search: true,
     max: 20,
-    hide:true,
+    hide: true,
   },
   {
     title: "月经频次(天)",
@@ -344,7 +368,7 @@ const columns = reactive([
     title: "标签",
     dataIndex: "tag",
     formType: "input",
-    hide:true,
+    hide: true,
   },
   // {
   //   title: "标签备注",

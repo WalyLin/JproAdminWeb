@@ -213,6 +213,10 @@ const imageSee = async (row, record, dataIndex) => {
   if (row.returnType) {
 
     if (row.returnType === 'url') {
+      if (! record[row.dataIndex]) {
+        Message.info('无图片')
+        return
+      }
       emit('showImage', record[dataIndex])
       return
     }

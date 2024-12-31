@@ -9,8 +9,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from 'vue'
+import { ref, reactive, watch, shallowRef } from 'vue'
 import { Message } from '@arco-design/web-vue'
+import customerComponent from '@/components/customer/image.vue'
 import dayjs from 'dayjs'
 import { setModalSizeEvent } from "@/utils/common";
 import jproCheckRecord from '@/api/jpro/jproCheckRecord'
@@ -45,11 +46,11 @@ setModalSizeEvent((config) => {
 watch(() => props.mother, (val) => {
     form.value.mother_id = val.id
     form.value.hospital_id = val.hospital_id
-    form.value.doctor_id = val.doctor_id
+    form.value.doctor_id = val.doctor_id    
     form.value.menstrual = val.last_menstrual_time
     form.value.check_time = dayjs().format('YYYY-MM-DD')
     form.value.status = '1'
-
+    form.value.mother_passport = val.passport    
 }, { immediate: true })
 
 // 组件的字段设置
@@ -73,6 +74,12 @@ const columns = reactive([
             message: "请选择孕妈"
         },
         multiple: false
+    },
+    {
+        title: '孕妈护照',
+        dataIndex: "mother_passport",
+        formType: "component",
+        component: shallowRef(customerComponent)
     },
     {
         title: "月经开始时间",
@@ -127,7 +134,7 @@ const columns = reactive([
         formType: "radio",
         dict: {
             name: 'check_record_status',
-            translation: true,            
+            translation: true,
         },
         addDefaultValue: 1,
     },

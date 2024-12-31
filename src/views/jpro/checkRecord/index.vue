@@ -2,20 +2,20 @@
   <div class="ma-content-block lg:flex justify-between p-4">
     <!-- CRUD 组件 -->
     <ma-crud :options="options" :columns="columns" ref="crudRef">
+      <template #mother_passport="{record}">
+        <image-see :url="record.mother_passport"></image-see>
+      </template>
     </ma-crud>
   </div>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, shallowRef } from 'vue'
 import jproCheckRecord from '@/api/jpro/jproCheckRecord'
-import apicommon from '@/api/common'
+import customerComponent from '@/components/customer/image.vue'
+import imageSee from '@/components/customer/imageSee.vue'
 import { Message } from '@arco-design/web-vue'
-import tool from '@/utils/tool'
-import * as common from '@/utils/common'
 
 const crudRef = ref()
-
-
 const numberOperation = (newValue, id, numberName) => {
   jproCheckRecord.numberOperation({ id, numberName, numberValue: newValue }).then(res => {
     res.success && Message.success(res.message)
@@ -62,22 +62,7 @@ const options = reactive({
     realApi: jproCheckRecord.realDeletes,
     realAuth: ['jpro:checkRecord:realDeletes']
   },
-  // recovery: {
-  //   show: true,
-  //   api: jproCheckRecord.recoverys,
-  //   auth: ['jpro:checkRecord:recovery']
-  // },
-  // import: {
-  //   show: true,
-  //   url: 'jpro/checkRecord/import',
-  //   templateUrl: 'jpro/checkRecord/downloadTemplate',
-  //   auth: ['jpro:checkRecord:import']
-  // },
-  // export: {
-  //   show: true,
-  //   url: 'jpro/checkRecord/export',
-  //   auth: ['jpro:checkRecord:export']
-  // }
+
 })
 
 const columns = reactive([
@@ -112,6 +97,12 @@ const columns = reactive([
       message: "请输入孕妈id"
     },
     multiple: false
+  },
+  {
+    title: '孕妈护照',
+    dataIndex: "mother_passport",
+    formType: "component",
+    component: shallowRef(customerComponent)
   },
   {
     title: "医院",
@@ -173,10 +164,11 @@ const columns = reactive([
     dict: {
       name: 'check_record_status',
       translation: true,
-      tagColors:{1:'gray',2:'red'},
+      tagColors: { 1: 'gray', 2: 'red' },
     },
     addDefaultValue: 1,
   },
+
   {
     title: "备注",
     dataIndex: "remark",
