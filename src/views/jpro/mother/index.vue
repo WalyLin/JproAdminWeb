@@ -83,7 +83,7 @@ const options = reactive({
 
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'hep_b' }] }, { span: 12, formList: [{ dataIndex: 'hep_b_date' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'bleed_amount' }] },] },
-      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'building' }] }, { span: 12, formList: [{ dataIndex: 'room' }] }] },
+      { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'building_id' }] }, { span: 12, formList: [{ dataIndex: 'room_id' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'last_menstrual_time' }] }, { span: 12, formList: [{ dataIndex: 'arrive_time' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'hospital_id' }] }, { span: 12, formList: [{ dataIndex: 'doctor_id' }] }] },
       { formType: 'grid', cols: [{ span: 12, formList: [{ dataIndex: 'operation' }] }, { span: 12, formList: [{ dataIndex: 'food_allergy' }] }] },
@@ -266,14 +266,34 @@ const columns = reactive([
   },
   {
     title: "楼栋",
-    dataIndex: "building",
-    formType: "input",
+    dataIndex: "building_id",
+    formType: "select",
     hide: true,
+    dict: {
+      url: 'jpro/building/remote',
+      method:'post',
+      props: {
+        label: 'title',
+        value: 'id'
+      },
+      translation: true,      
+    },
+    // 定义联动，dataA的数据改变，dataB和dataC的数据也会变化
+    cascaderItem: ['room_id',],    
   },
   {
     title: "房间",
-    dataIndex: "room",
-    formType: "input",
+    dataIndex: "room_id",
+    formType: "select",
+    dict: {
+      url: 'jpro/room/remote?filter[building_id]={{key}}',
+      method:'post',
+      props: {
+        label: 'title',
+        value: 'id'
+      },
+      translation: true,
+    },
     hide: true,
   },
   {

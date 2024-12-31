@@ -1,1 +1,0 @@
-import{Z as r,c,e as s,h as e,o}from"./index-7075CniP.js";import a from"./auth-gFQE5Ngk.js";import n from"./docMain-B-GAZdnR.js";import"./doc--Z7Ditn1.js";import"./package-D_Arx9TB.js";const m={class:"h-full"},k={__name:"index",setup(i){const t=r();return(p,_)=>(o(),c("div",m,[s(t).auth?(o(),e(n,{key:0})):(o(),e(a,{key:1}))]))}};export{k as default};
