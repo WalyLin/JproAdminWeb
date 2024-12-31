@@ -1,0 +1,1 @@
+import e from"./st-announced-B3tG1FmY.js";import{o,c,d as t}from"./index-7niCPtNG.js";const a={class:"block lg:flex"},m={__name:"work-panel",setup(r){return(s,_)=>(o(),c("div",a,[t(e)]))}};export{m as default};

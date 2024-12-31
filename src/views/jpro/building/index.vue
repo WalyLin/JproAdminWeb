@@ -11,6 +11,7 @@
           :default-checked="record.status == 1"
         />
       </template>
+      
     </ma-crud>
   </div>
 </template>
@@ -95,6 +96,19 @@ const columns = reactive([
     formType: "input-number"
   },
   {
+    title: "已录入房间数量",
+    dataIndex: "room_count",
+    formType: "input",
+    addDisplay: false,
+    editDisplay: false,
+  },
+  {
+    title:'已入住孕妈',
+    dataIndex:"mother_count",
+    addDisplay: false,
+    editDisplay: false,
+  },
+  {
     title: '状态', 
     dataIndex: 'status', 
     search: true, 
@@ -107,24 +121,7 @@ const columns = reactive([
     dataIndex: "remark",
     formType: "input"
   },
-  {
-    title: "",
-    dataIndex: "created_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  },
-  {
-    title: "",
-    dataIndex: "updated_at",
-    formType: "date",
-    addDisplay: false,
-    editDisplay: false,
-    hide: true,
-    showTime: true
-  }
+  
 ])
 </script>
 <script>export default { name: 'jpro:building' } </script>
